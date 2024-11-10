@@ -28,6 +28,9 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    profilePic:{
+      type: String
+    },
     transactionHistory: [
       {
         type: mongoose.Schema.Types.ObjectId,

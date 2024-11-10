@@ -54,3 +54,60 @@ export const registerUser = async (req, res) => {
   }
 
 };
+//login
+export const loginUser = async (req, res) => {
+  
+  const { email, password } = req.body;
+  
+  // Validate if both email and password are provided
+  if (!email || !password) {
+    return res.status(400).json({ error: 'Please provide both email and password' });
+  }
+
+  try {
+    // Find user by email
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(401).json({ error: 'User not found' });
+    }
+
+    // Compare the hashed password with the provided password
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
+
+    // Generate JWT token (valid for 1 hour)
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+    // Send token to user
+    res.json({ message: 'Login successful', token });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
+export const updateUserProfile = async (req, res) => {
+  const { name, contact, location, profilePic } = req.body;
+  
+  try {
+    // Find user by ID from JWT
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Update user profile
+    user.name = name || user.name;
+    user.contact = contact || user.contact;
+    user.location = location || user.location;
+    user.profilePic = profilePic || user.profilePic;
+
+    // Save updated user
+    await user.save();
+    res.json({ message: 'Profile updated successfully', user });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
