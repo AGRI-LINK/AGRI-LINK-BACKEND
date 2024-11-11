@@ -20,8 +20,6 @@ export const registerUser = async (req, res) => {
       return res.status(400).json({ message: 'User already exists' });
     }
 
-
-
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -33,27 +31,22 @@ export const registerUser = async (req, res) => {
       role,
       contact,
       location,
+      profilePic
     });
 
     // Save the user to the database
     await newUser.save();
 
-    // Create a JWT token for the user
-    const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, {
-      expiresIn: '1d',
-    });
-
-    // Send response with the JWT token
+    // Send a success response without JWT token
     res.status(201).json({
       message: 'User created successfully',
-      token,
     });
   } catch (error) {
     console.error(error.message);
     res.status(500).json({ message: 'Server error' });
   }
-
 };
+
 //login
 export const loginUser = async (req, res) => {
   
@@ -89,7 +82,7 @@ export const loginUser = async (req, res) => {
 
 
 export const updateUserProfile = async (req, res) => {
-  const { name, contact, location, profilePic } = req.body;
+  const { name, email, role, contact, location, profilePic } = req.body;
   
   try {
     // Find user by ID from JWT
@@ -100,6 +93,8 @@ export const updateUserProfile = async (req, res) => {
 
     // Update user profile
     user.name = name || user.name;
+    user.email = email || user.email;
+    user.role = role || user.role;
     user.contact = contact || user.contact;
     user.location = location || user.location;
     user.profilePic = profilePic || user.profilePic;
