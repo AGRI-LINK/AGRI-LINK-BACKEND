@@ -3,6 +3,7 @@ import { check } from 'express-validator';
 
 import express from 'express';
 import { registerUser, loginUser, updateUserProfile } from '../controllers/user.js';
+import authenticate from '../middlewares/auth.js';
 
 
 const router = express.Router();
@@ -19,7 +20,7 @@ router.post('/register',
     registerUser);
 
     router.post('/login', loginUser )
-    router.patch('/profile', updateUserProfile)
+    router.patch('/profile', authenticate, updateUserProfile)
 
 
     
