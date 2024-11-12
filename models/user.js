@@ -15,17 +15,18 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    role: {
-      type: String,
-      enum: ['farmer', 'buyer'], 
-      required: true,
-    },
+    
     contact: {
       type: String,
       required: true,
     },
     location: {
       type: String,
+      required: true,
+    },
+    role: {
+      type: String,
+      enum: ['farmer', 'buyer'], 
       required: true,
     },
     profilePic:{

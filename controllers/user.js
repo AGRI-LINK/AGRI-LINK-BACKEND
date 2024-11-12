@@ -5,7 +5,7 @@ import { validationResult } from 'express-validator';
 
 // User Registration Controller
 export const registerUser = async (req, res) => {
-  const { name, email, password, role, contact, location } = req.body;
+  const { name, email, password, contact, location, role} = req.body;
 
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -28,9 +28,9 @@ export const registerUser = async (req, res) => {
       name,
       email,
       password: hashedPassword,
-      role,
       contact,
       location,
+      role
     });
 
     // Save the user to the database
@@ -80,32 +80,10 @@ export const loginUser = async (req, res) => {
 };
 
 
-export const getUserProfile = async (req, res) => {
-  try {
-    const userId = req.user.id; // Access the ID from the decoded token
-
-    const user = await User.findById(userId); // Retrieve user from the database
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-
-    res.status(200).json({
-      name: user.name,
-      email: user.email,
-      role: user.role,
-      contact: user.contact,
-      location: user.location,
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Server error' });
-  }
-};
-
-
 
 export const updateUserProfile = async (req, res) => {
-  const { name, email, role, contact, location, profilePic } = req.body;
+ 
+  const { name, email, contact, location, role, profilePic } = req.body;
   
   try {
     // Find user by ID from JWT
@@ -119,9 +97,9 @@ export const updateUserProfile = async (req, res) => {
     // Update user profile
     user.name = name || user.name;
     user.email = email || user.email;
-    user.role = role || user.role;
     user.contact = contact || user.contact;
     user.location = location || user.location;
+    user.role = role || user.role;
     user.profilePic = profilePic || user.profilePic;
 
     // Save updated user

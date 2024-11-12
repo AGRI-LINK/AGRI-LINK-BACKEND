@@ -2,7 +2,7 @@
 import { check } from 'express-validator';
 
 import express from 'express';
-import { registerUser, loginUser, getUserProfile, updateUserProfile } from '../controllers/user.js';
+import { registerUser, loginUser, updateUserProfile } from '../controllers/user.js';
 
 
 const router = express.Router();
@@ -19,8 +19,7 @@ router.post('/register',
     registerUser);
 
     router.post('/login', loginUser )
-    router.get('/getProfile', getUserProfile)
-    router.put('/updateProfile', updateUserProfile)
+    router.patch('/profile', updateUserProfile)
 
 
     
