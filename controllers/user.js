@@ -90,6 +90,8 @@ export const updateUserProfile = async (req, res) => {
       return res.status(404).json({ error: 'User not found' });
     }
 
+
+    
     // Update user profile
     user.name = name || user.name;
     user.email = email || user.email;

@@ -4,6 +4,7 @@ import { check } from 'express-validator';
 import express from 'express';
 import { registerUser, loginUser, updateUserProfile } from '../controllers/user.js';
 
+
 const router = express.Router();
 
 // POST route for user registration
