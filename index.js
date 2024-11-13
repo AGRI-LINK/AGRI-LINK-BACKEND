@@ -10,8 +10,10 @@ connectDB().then(() => {
 });
 
 import userRoutes from './routes/user.js'
+import productsRoutes from './routes/products.js'
 import cors from 'cors';
 import authenticate from './middlewares/auth.js';
+import roleCheck from './middlewares/roleCheck.js';
 
 dotenv.config();
 connectDB();
@@ -23,7 +25,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use('/api/users', userRoutes);
+app.use('/api/products', productsRoutes);
 app.use(authenticate);
+app.use(roleCheck);
+
 
 
 app.get('/', (req, res, next) => {
