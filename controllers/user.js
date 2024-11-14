@@ -69,8 +69,14 @@ export const loginUser = async (req, res) => {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
-    // Generate JWT token (valid for 1 hour)
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    
+    // 3. Generate a JWT token
+    const token = jwt.sign(
+      { id: user._id, role: user.role }, // Payload includes user ID and role
+      process.env.JWT_SECRET,            // Secret key for signing
+      { expiresIn: '1h' }                // Token expiration
+    );
+
 
     // Send token to user
     res.json({ message: 'Login successful', token });

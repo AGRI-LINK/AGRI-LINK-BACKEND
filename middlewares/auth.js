@@ -9,6 +9,7 @@ export const authenticate = (req, res, next) => {
   }
 
   const token = authHeader.split(' ')[1]; // Split to get the token after 'Bearer '
+  
 
   try {
     // Verify token using your secret key
@@ -20,21 +21,6 @@ export const authenticate = (req, res, next) => {
   }
 };
 
-function authenticateUser(req, res, next) {
-  const token = req.headers.authorization?.split(' ')[1];
-  if (!token) {
-    return res.status(401).json({ error: 'Unauthorized' });
-  }
-
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded;
-    console.log("Authenticated user:", req.user);  // Log to confirm role here
-    next();
-  } catch (err) {
-    res.status(401).json({ error: 'Token is invalid or expired' });
-  }
-}
 
 
 export default authenticate;  
