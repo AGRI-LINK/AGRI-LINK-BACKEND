@@ -76,13 +76,12 @@ export const loginUser = async (req, res) => {
       process.env.JWT_SECRET,            // Secret key for signing
       { expiresIn: '1h' }                // Token expiration
     );
-    console.log("Generated Token:", token); // Log token to verify
-    res.json({ token });
+    
 
     // Send token to user
-    res.json({ message: 'Login successful', token });
+    return res.status(200).json({ message: 'Login successful', token });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 };
 
