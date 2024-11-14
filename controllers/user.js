@@ -85,11 +85,29 @@ export const loginUser = async (req, res) => {
   }
 };
 
+// Logout User
+export const logoutUser = (req, res) => {
+  res.status(200).json({ message: 'Logged out successfully' });
+};
 
+
+
+// Get User Profile
+export const getUserProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select('-password');
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    res.status(200).json({ user });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 
 export const updateUserProfile = async (req, res) => {
  
-  const { name, email, contact, location, role, profilePic } = req.body;
+  const { contact, location,  profilePic } = req.body;
   
   try {
     // Find user by ID from JWT
@@ -101,11 +119,8 @@ export const updateUserProfile = async (req, res) => {
 
     
     // Update user profile
-    user.name = name || user.name;
-    user.email = email || user.email;
     user.contact = contact || user.contact;
     user.location = location || user.location;
-    user.role = role || user.role;
     user.profilePic = profilePic || user.profilePic;
 
     // Save updated user

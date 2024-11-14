@@ -2,7 +2,7 @@
 import { check } from 'express-validator';
 
 import express from 'express';
-import { registerUser, loginUser, updateUserProfile } from '../controllers/user.js';
+import { registerUser, loginUser, updateUserProfile, getUserProfile, logoutUser } from '../controllers/user.js';
 import authenticate from '../middlewares/auth.js';
 
 
@@ -21,7 +21,8 @@ router.post('/register',
 
     router.post('/login', loginUser )
     router.patch('/profile', authenticate, updateUserProfile)
-
+    router.get('/profile', authenticate, getUserProfile)
+router.delete('/logout', logoutUser  )
 
     
   
