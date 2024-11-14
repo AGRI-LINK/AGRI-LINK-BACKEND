@@ -22,7 +22,7 @@ router.post('/register',
     router.post('/login', loginUser )
     router.patch('/profile', authenticate, updateUserProfile)
     router.get('/profile', authenticate, getUserProfile)
-router.delete('/logout', logoutUser  )
+router.delete('/logout', authenticate, logoutUser  )
 
     
   
