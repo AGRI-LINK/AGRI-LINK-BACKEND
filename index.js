@@ -14,6 +14,7 @@ import productsRoutes from './routes/products.js'
 import cors from 'cors';
 import authenticate from './middlewares/auth.js';
 import roleCheck from './middlewares/roleCheck.js';
+import authorizeFarmer from './middlewares/authorizeFarmer.js';
 
 dotenv.config();
 connectDB();
@@ -27,6 +28,7 @@ app.use(express.json());
 app.use('/api/users', userRoutes);
 app.use('/api/products', authenticate, authorizeFarmer, productsRoutes);
 app.use(authenticate);
+app.use(authorizeFarmer);
 app.use(roleCheck);
 
 
