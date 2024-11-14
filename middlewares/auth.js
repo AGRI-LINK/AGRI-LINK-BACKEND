@@ -1,25 +1,21 @@
 
 import jwt from 'jsonwebtoken';
 
-export const authenticate = (req, res, next) => {
-  // Check if Authorization header exists
-  const authHeader = req.headers.authorization;
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return res.status(401).json({ message: 'No token provided' });
+function authenticate(req, res, next) {
+  const token = req.headers.authorization?.split(' ')[1];
+  if (!token) {
+    return res.status(401).json({ error: 'Unauthorized' });
   }
-
-  const token = authHeader.split(' ')[1]; // Split to get the token after 'Bearer '
-  
 
   try {
-    // Verify token using your secret key
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded; // Attach the decoded token payload to req.user
+    req.user = decoded;
+    console.log("Decoded Token in authenticate:", req.user); // Check role here
     next();
-  } catch (error) {
-    return res.status(401).json({ message: 'Invalid token' });
+  } catch (err) {
+    res.status(401).json({ error: 'Token is invalid or expired' });
   }
-};
+}
 
 
 
