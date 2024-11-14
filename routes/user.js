@@ -19,7 +19,7 @@ router.post('/register',
   ],
     registerUser);
 
-    router.post('/login', loginUser )
+    router.post('/login', authenticate, loginUser )
     router.patch('/profile', authenticate, updateUserProfile)
 
 
