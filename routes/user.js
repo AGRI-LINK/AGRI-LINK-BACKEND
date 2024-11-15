@@ -20,8 +20,8 @@ router.post('/register',
     registerUser);
 
     router.post('/login', loginUser )
-    router.patch('/profile', authenticate, updateUserProfile)
-    router.get('/profile', authenticate, getUserProfile)
+    router.patch('/profile/update', authenticate, updateUserProfile)
+    router.get('/profile/get', authenticate, getUserProfile)
 router.delete('/logout', authenticate, logoutUser  )
 
     

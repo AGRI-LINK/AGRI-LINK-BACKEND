@@ -29,6 +29,32 @@ export const addNewProduct = async (req, res) => {
     }
   };
 
+
+  export const getProductById = async (req, res) => {
+    const { id } = req.params; // Extract product ID from the request parameters
+  
+    try {
+      // Find the product by its ID
+      const product = await Product.findById(id);
+  
+      // Check if the product exists
+      if (!product) {
+        return res.status(404).json({ error: 'Product not found' });
+      }
+  
+      // Send the product details in the response
+      res.status(200).json({ product });
+    } catch (error) {
+      // Handle errors, such as invalid IDs or server issues
+      if (error.name === 'CastError') {
+        return res.status(400).json({ error: 'Invalid product ID' });
+      }
+      res.status(500).json({ error: error.message });
+    }
+  };
+  
+
+
   export const updateProductById = async (req, res) => {
     const { id } = req.params;
     const { name, description, quantity, price, category, location, images } = req.body;
@@ -77,6 +103,24 @@ export const addNewProduct = async (req, res) => {
       res.status(500).json({ error: error.message });
     }
   };
+
+
+  export const deleteAllProducts = async (req, res) => {
+    try {
+      // Check if the user is authorized to delete all products
+      if (req.user.role !== 'farmer') {
+        return res.status(403).json({ error: 'Only farmers can delete all products' });
+      }
+  
+      // Delete all products from the database
+      await Product.deleteMany({});
+  
+      res.json({ message: 'All products deleted successfully' });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  };
+  
 
   export const getAndFilterProducts = async (req, res) => {
     const { category, location, sort } = req.query;
