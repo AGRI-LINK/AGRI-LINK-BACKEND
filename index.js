@@ -12,9 +12,7 @@ connectDB().then(() => {
 import userRoutes from './routes/user.js'
 import productsRoutes from './routes/products.js'
 import cors from 'cors';
-import authenticate from './middlewares/auth.js';
 
-import authorizeFarmer from './middlewares/authorizeFarmer.js';
 
 dotenv.config();
 connectDB();
@@ -26,7 +24,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use('/api/users', userRoutes);
-app.use('/api/products', authenticate, authorizeFarmer, productsRoutes);
+app.use('/api/products',  productsRoutes);
 
 
 
