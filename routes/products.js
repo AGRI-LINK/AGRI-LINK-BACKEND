@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.post('/add', authenticate, authorizeFarmer, addNewProduct)
 
-router.put('/update/:id', authenticate,  authorizeFarmer, updateProductById);
+router.patch('/update/:id', authenticate,  authorizeFarmer, updateProductById);
 
 router.delete('/delete/:id', authenticate, authorizeFarmer, deleteProductById);
 
