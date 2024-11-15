@@ -17,9 +17,9 @@ router.delete('/delete/:id', authenticate, authorizeFarmer, deleteProductById);
 router.delete('/delete', authenticate, authorizeFarmer, deleteAllProducts);
 
 
-router.get('/list', getAndFilterProducts);
+router.get('/list', authenticate, getAndFilterProducts);
 
-router.get('/get/:id', authenticate, authorizeFarmer, getProductById);
+router.get('/get/:id', authenticate, getProductById);
 
 export default router;
 
