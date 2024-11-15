@@ -97,13 +97,15 @@ export const addNewProduct = async (req, res) => {
         return res.status(403).json({ error: 'You do not have permission to delete this product' });
       }
   
-      await product.remove();
+      // Delete the product
+      await Product.findByIdAndDelete(id);
+  
       res.json({ message: 'Product deleted successfully' });
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
   };
-
+  
 
   export const deleteAllProducts = async (req, res) => {
     try {
