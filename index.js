@@ -3,7 +3,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import connectDB from './config/db.js';
 
-dotenv.config();
+
 
 connectDB().then(() => {
   console.log('Database connected successfully');
@@ -30,7 +30,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/products',  productsRoutes);
 app.use('/api/messages', userMessages);
 
-
+dotenv.config();
 
 
 
