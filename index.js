@@ -14,6 +14,7 @@ connectDB().then(() => {
 import userRoutes from './routes/user.js'
 import productsRoutes from './routes/products.js'
 import userMessages from './routes/messages.js'
+import notificationRoutes from './routes/notification.js';
 
 import cors from 'cors';
 
@@ -29,6 +30,7 @@ app.use(express.json());
 app.use('/api/users', userRoutes);
 app.use('/api/products',  productsRoutes);
 app.use('/api/messages', userMessages);
+app.use('/api/notifications', notificationRoutes);
 
 
 

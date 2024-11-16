@@ -1,4 +1,5 @@
 import Message from '../models/messages.js';
+import Notification from '../models/notification.js';
 
 
 export const sendMessage = async (req, res) => {
@@ -9,19 +10,28 @@ export const sendMessage = async (req, res) => {
   }
 
   try {
+    // Save the message
     const message = new Message({
       sender: req.user.id,
       receiver: receiverId,
       content,
     });
-
     await message.save();
+
+    // Create a notification for the receiver
+    const notification = new Notification({
+      user: receiverId,
+      title: 'New Message',
+      content: `You received a new message from ${req.user.name}.`,
+    });
+    await notification.save();
 
     res.status(201).json({ message: 'Message sent successfully!', messageData: message });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
+
 
 export const getInboxMessages = async (req, res) => {
   try {
