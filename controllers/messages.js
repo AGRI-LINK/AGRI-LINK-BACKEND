@@ -23,12 +23,16 @@ export const sendMessage = async (req, res) => {
 
   export const getInboxMessages = async (req, res) => {
     try {
-      const messages = await Message.find({ receiver: req.user.id }).populate('sender', 'name email');
-      res.json(messages);
+        const messages = await Message.find({ receiver: req.user.id })
+            .populate('sender', 'name email') // Populate sender's name and email
+            .populate('receiver', 'name email'); // Populate receiver's name and email
+
+        res.json(messages);
     } catch (error) {
-      res.status(500).json({ error: error.message });
+        res.status(500).json({ error: error.message });
     }
-  };
+};
+
 
 
  
