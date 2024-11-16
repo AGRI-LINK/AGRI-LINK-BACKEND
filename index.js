@@ -3,6 +3,8 @@ import express from 'express';
 import dotenv from 'dotenv';
 import connectDB from './config/db.js';
 
+dotenv.config();
+
 connectDB().then(() => {
   console.log('Database connected successfully');
 }).catch((err) => {
@@ -16,8 +18,7 @@ import userMessages from './routes/messages.js'
 import cors from 'cors';
 
 
-dotenv.config();
-connectDB();
+
 
 const app = express();
 
