@@ -1,4 +1,5 @@
 import Message from '../models/messages.js';
+import User from '../models/user.js';
 
 import sendEmail from '../utils/sendEmail.js';
 
