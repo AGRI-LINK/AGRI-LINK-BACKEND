@@ -1,24 +1,26 @@
 import nodemailer from 'nodemailer';
 
-const transporter = nodemailer.createTransport({
-  service: 'Gmail', // Use your email service (e.g., Gmail, Outlook)
-  auth: {
-    user: 'your-email@gmail.com',
-    pass: 'your-email-password',
-  },
-});
-
 const sendEmail = async (to, subject, text) => {
   try {
-    await transporter.sendMail({
-      from: '"AgriLink" <your-email@gmail.com>',
+    const transporter = nodemailer.createTransport({
+      service: 'Gmail', // Use your email service (e.g., Gmail, Outlook, etc.)
+      auth: {
+        user: process.env.EMAIL_USER, // Your email address
+        pass: process.env.EMAIL_PASS, // Your email password or app password
+      },
+    });
+
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
       to,
       subject,
       text,
-    });
-    console.log('Email sent successfully');
+    };
+
+    await transporter.sendMail(mailOptions);
+    console.log('Email sent successfully!');
   } catch (error) {
-    console.error('Error sending email:', error);
+    console.error('Error sending email:', error.message);
   }
 };
 
