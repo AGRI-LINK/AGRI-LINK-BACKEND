@@ -15,8 +15,10 @@ export const subscribeForProduceAlerts = async (req, res) => {
   
     try {
       const subscription = new Subscription({
-        user: req.user.id,
-        preferences,
+        user: req.user.id, 
+        preferences
+        
+        
       });
   
       await subscription.save();

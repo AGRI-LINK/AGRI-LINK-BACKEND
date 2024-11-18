@@ -4,7 +4,7 @@ import { subscribeForProduceAlerts } from '../controllers/subscription.js';
 
 const router = express.Router();
 
-router.post('/', authenticate, subscribeForProduceAlerts);
+router.post('/subscribe', authenticate, subscribeForProduceAlerts);
 
 
 
