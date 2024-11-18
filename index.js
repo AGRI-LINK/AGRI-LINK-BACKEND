@@ -2,6 +2,8 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import connectDB from './config/db.js';
+import http from 'http';
+import { Server } from 'socket.io';
 
 dotenv.config();
 
@@ -15,6 +17,11 @@ import userRoutes from './routes/user.js'
 import productsRoutes from './routes/products.js'
 import userMessages from './routes/messages.js'
 import notificationRoutes from './routes/notification.js';
+import reviewsRouter from './routes/reviews.js';
+
+import subscriptionRoutes from './routes/subscription.js';
+
+
 
 import cors from 'cors';
 
@@ -31,9 +38,28 @@ app.use('/api/users', userRoutes);
 app.use('/api/products',  productsRoutes);
 app.use('/api/messages', userMessages);
 app.use('/api/notifications', notificationRoutes);
+app.use('/api/reviews', reviewsRouter);
+app.use('/api/subscriptions', subscriptionRoutes);
 
 
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: 'https://agric-vate.netlify.app/',
+  },
+});
 
+io.on('connection', (socket) => {
+  console.log('A user connected:', socket.id);
+
+  socket.on('sendMessage', ({ sender, receiver, content }) => {
+    io.to(receiver).emit('receiveMessage', { sender, content });
+  });
+
+  socket.on('disconnect', () => {
+    console.log('A user disconnected:', socket.id);
+  });
+});
 
 
 
