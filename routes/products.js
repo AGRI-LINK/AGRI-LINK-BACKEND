@@ -11,7 +11,7 @@ const router = express.Router();
 
 router.post('/add', authenticate, authorizeFarmer, productImage.single('images'), addNewProduct)
 
-router.patch('/update/:id', authenticate,  authorizeFarmer, updateProductById);
+router.patch('/update/:id', authenticate,  authorizeFarmer, productImage.single('images'), updateProductById);
 
 router.delete('/delete/:id', authenticate, authorizeFarmer, deleteProductById);
 

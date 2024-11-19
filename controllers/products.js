@@ -18,7 +18,7 @@ export const addNewProduct = async (req, res) => {
         price,
         category,
         location,
-        images,
+        images: req.file?.filename,
         createdBy: req.user.id,
       });
   
