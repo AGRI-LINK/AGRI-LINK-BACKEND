@@ -21,6 +21,9 @@ import reviewsRouter from './routes/reviews.js';
 
 import subscriptionRoutes from './routes/subscription.js';
 
+import uploadRoute from './routes/upload.js'; // Import upload route
+import path from 'path';
+
 
 
 import cors from 'cors';
@@ -40,6 +43,8 @@ app.use('/api/messages', userMessages);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/reviews', reviewsRouter);
 app.use('/api/subscriptions', subscriptionRoutes);
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/api', uploadRoute);
 
 
 const server = http.createServer(app);
@@ -73,3 +78,4 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+export default io
