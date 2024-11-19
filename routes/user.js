@@ -19,12 +19,12 @@ router.post('/register',
     check('password')
       .isLength({ min: 6 })
       .withMessage('Password must be at least 6 characters long'),
-      body('profilePic').optional().isURL().withMessage('Profile picture must be a valid URL')
+     
   ],
   productImage.single('images'), registerUser);
 
     router.post('/login', loginUser )
-    router.patch('/profile/update', authenticate, updateUserProfile)
+    router.patch('/profile/update', authenticate, productImage.single('images'), updateUserProfile)
     router.get('/profile/get', authenticate, getUserProfile)
 router.delete('/logout', authenticate, logoutUser  )
 
