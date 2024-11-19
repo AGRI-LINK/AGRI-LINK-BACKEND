@@ -30,7 +30,7 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
     profilePic:{
-      type: String, required
+      type: String, required: false
     },
     transactionHistory: [
       {
