@@ -4,6 +4,8 @@ import { check } from 'express-validator';
 import express from 'express';
 import { registerUser, loginUser, updateUserProfile, getUserProfile, logoutUser } from '../controllers/user.js';
 import authenticate from '../middlewares/auth.js';
+import { productImage } from '../middlewares/upload.js';
+
 
 
 const router = express.Router();
