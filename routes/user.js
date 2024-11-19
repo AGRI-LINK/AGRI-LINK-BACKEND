@@ -1,5 +1,6 @@
 
 import { check } from 'express-validator';
+import { body } from 'express-validator';
 
 import express from 'express';
 import { registerUser, loginUser, updateUserProfile, getUserProfile, logoutUser } from '../controllers/user.js';
@@ -17,7 +18,8 @@ router.post('/register',
     check('email').isEmail().withMessage('Please enter a valid email address'),
     check('password')
       .isLength({ min: 6 })
-      .withMessage('Password must be at least 6 characters long')
+      .withMessage('Password must be at least 6 characters long'),
+      body('profilePic').optional().isURL().withMessage('Profile picture must be a valid URL')
   ],
   productImage.single('images'), registerUser);
 
