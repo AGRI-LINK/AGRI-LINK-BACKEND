@@ -5,7 +5,7 @@ import { validationResult } from 'express-validator';
 
 // User Registration Controller
 export const registerUser = async (req, res) => {
-  const { name, email, password, contact, location, role} = req.body;
+  const { name, email, password, contact, location, role, profilePic} = req.body;
 
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -30,7 +30,8 @@ export const registerUser = async (req, res) => {
       password: hashedPassword,
       contact,
       location,
-      role
+      role, 
+      profilePic
     });
 
     // Save the user to the database
