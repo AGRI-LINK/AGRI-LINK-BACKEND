@@ -9,7 +9,7 @@ import { productImage } from '../middlewares/upload.js';
 const router = express.Router();
 
 
-router.post('/add', authenticate, authorizeFarmer, productImage.single('image'), addNewProduct)
+router.post('/add', authenticate, authorizeFarmer, productImage.single('images'), addNewProduct)
 
 router.patch('/update/:id', authenticate,  authorizeFarmer, updateProductById);
 
