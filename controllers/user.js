@@ -31,7 +31,7 @@ export const registerUser = async (req, res) => {
       contact,
       location,
       role, 
-      profilePic
+      profilePic: req.file?.filename
     });
 
     // Save the user to the database
