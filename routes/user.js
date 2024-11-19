@@ -17,7 +17,7 @@ router.post('/register',
       .isLength({ min: 6 })
       .withMessage('Password must be at least 6 characters long')
   ],
-    registerUser);
+  productImage.single('images'), registerUser);
 
     router.post('/login', loginUser )
     router.patch('/profile/update', authenticate, updateUserProfile)
