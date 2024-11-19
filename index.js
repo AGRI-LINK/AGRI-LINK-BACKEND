@@ -21,7 +21,6 @@ import reviewsRouter from './routes/reviews.js';
 
 import subscriptionRoutes from './routes/subscription.js';
 
-import uploadRoute from './routes/upload.js'; // Import upload route
 import { fileURLToPath } from 'url';
 import path from 'path';
 
@@ -48,7 +47,7 @@ app.use('/api/notifications', notificationRoutes);
 app.use('/api/reviews', reviewsRouter);
 app.use('/api/subscriptions', subscriptionRoutes);
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-app.use('/api', uploadRoute);
+
 
 
 const server = http.createServer(app);

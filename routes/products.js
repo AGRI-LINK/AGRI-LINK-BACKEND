@@ -4,11 +4,12 @@ import authenticate from '../middlewares/auth.js';
 import { addNewProduct, deleteProductById, deleteAllProducts, getAndFilterProducts, updateProductById, getProductById } from '../controllers/products.js';
 
 import authorizeFarmer from '../middlewares/authorizeFarmer.js';
+import { productImage } from '../middlewares/upload.js';
 
 const router = express.Router();
 
 
-router.post('/add', authenticate, authorizeFarmer, addNewProduct)
+router.post('/add', authenticate, authorizeFarmer, productImage.single('image'), addNewProduct)
 
 router.patch('/update/:id', authenticate,  authorizeFarmer, updateProductById);
 
