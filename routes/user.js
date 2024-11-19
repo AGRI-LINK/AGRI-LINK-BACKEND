@@ -1,6 +1,6 @@
 
 import { check } from 'express-validator';
-import { body } from 'express-validator';
+
 
 import express from 'express';
 import { registerUser, loginUser, updateUserProfile, getUserProfile, logoutUser } from '../controllers/user.js';
@@ -12,7 +12,7 @@ import { productImage } from '../middlewares/upload.js';
 const router = express.Router();
 
 // POST route for user registration
-router.post('/register', 
+router.post('/register', productImage.single('profilePic'),
     [
     check('name').notEmpty().withMessage('Name is required'),
     check('email').isEmail().withMessage('Please enter a valid email address'),
@@ -21,10 +21,10 @@ router.post('/register',
       .withMessage('Password must be at least 6 characters long'),
      
   ],
-  productImage.single('images'), registerUser);
+  registerUser);
 
     router.post('/login', loginUser )
-    router.patch('/profile/update', authenticate, productImage.single('images'), updateUserProfile)
+    router.patch('/profile/update', authenticate, productImage.single('profilePic'), updateUserProfile)
     router.get('/profile/get', authenticate, getUserProfile)
 router.delete('/logout', authenticate, logoutUser  )
 
