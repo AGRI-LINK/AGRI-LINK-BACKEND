@@ -8,7 +8,7 @@ const productSchema = new mongoose.Schema({
   price: { type: String, required: true },         
   category: { type: String, required: true },      
   location: { type: String },                      
-  images: [{ type: String }],                      
+  images: { type: String },                      
   createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }, 
   dateAdded: { type: Date, default: Date.now },    
 });
