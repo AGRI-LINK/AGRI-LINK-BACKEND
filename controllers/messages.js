@@ -1,3 +1,4 @@
+//messages.js
 import Message from '../models/messages.js';
 import Notification from '../models/notification.js';
 

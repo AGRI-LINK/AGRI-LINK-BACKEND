@@ -1,3 +1,5 @@
+//notifications.js
+
 import Notification from '../models/notification.js';
 
 import { io } from '../index.js'

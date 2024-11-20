@@ -1,4 +1,4 @@
-
+//index.js
 import express from 'express';
 import dotenv from 'dotenv';
 import connectDB from './config/db.js';
@@ -59,6 +59,12 @@ const io = new Server(server, {
 
 io.on('connection', (socket) => {
   console.log('A user connected:', socket.id);
+
+  // Join a room using the user's ID
+  socket.on('joinRoom', ({ userId }) => {
+    socket.join(userId);
+    console.log(`User ${userId} joined room ${userId}`);
+  });
 
 
   socket.on('disconnect', () => {
