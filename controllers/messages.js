@@ -1,6 +1,8 @@
 import Message from '../models/messages.js';
 import Notification from '../models/notification.js';
 
+import { io } from '../index.js';
+
 
 export const sendMessage = async (req, res) => {
   const { receiverId, content } = req.body;
@@ -25,6 +27,16 @@ export const sendMessage = async (req, res) => {
       content: `You received a new message from ${req.user.name}.`,
     });
     await notification.save();
+
+// Emit a real-time event to the receiver's room
+io.to(receiverId).emit('newMessage', {
+  sender: req.user.id,
+  senderName: req.user.name,
+  content,
+  timestamp: message.createdAt,
+});
+
+
 
     res.status(201).json({ message: 'Message sent successfully!', messageData: message });
   } catch (error) {

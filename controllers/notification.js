@@ -1,5 +1,11 @@
 import Notification from '../models/notification.js';
 
+import { io } from '../index.js'
+
+
+
+
+
 export const getNotifications = async (req, res) => {
   try {
     // Find notifications for the logged-in user, newest first
@@ -10,7 +16,7 @@ export const getNotifications = async (req, res) => {
   }
 };
 
-
+// Mark notification as read (unchanged)
 export const markAsRead = async (req, res) => {
     const { notificationId } = req.params;
   
@@ -31,4 +37,28 @@ export const markAsRead = async (req, res) => {
       res.status(500).json({ error: error.message });
     }
   };
+
+  // Emit a real-time notification
+export const createNotification = async (receiverId, title, content) => {
+    try {
+        const notification = new Notification({
+            user: receiverId,
+            title,
+            content,
+        });
+        await notification.save();
+
+        // Emit real-time notification
+        io.to(receiverId).emit('newNotification', {
+            title,
+            content,
+            timestamp: notification.createdAt,
+        });
+
+        console.log('Notification sent successfully.');
+    } catch (error) {
+        console.error('Error sending notification:', error.message);
+    }
+};
+
   

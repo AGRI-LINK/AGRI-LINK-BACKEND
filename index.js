@@ -60,9 +60,6 @@ const io = new Server(server, {
 io.on('connection', (socket) => {
   console.log('A user connected:', socket.id);
 
-  socket.on('sendMessage', ({ sender, receiver, content }) => {
-    io.to(receiver).emit('receiveMessage', { sender, content });
-  });
 
   socket.on('disconnect', () => {
     console.log('A user disconnected:', socket.id);
@@ -81,4 +78,4 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-export default io
+export { server, io}
