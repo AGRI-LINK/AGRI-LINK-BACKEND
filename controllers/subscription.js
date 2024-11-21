@@ -1,8 +1,6 @@
 import Subscription from '../models/subscription.js';
 import Product from '../models/products.js';
-import { io } from '../index.js'; // Import io
 
-// Subscribe for product alerts
 export const subscribeForProduceAlerts = async (req, res) => {
   const { preferences } = req.body;
 
@@ -35,15 +33,8 @@ Product.watch().on('change', async (change) => {
         'preferences.location': newProduct.location,
       }).populate('user');
 
-      // Notify each subscriber in real-time
       for (const subscriber of subscribers) {
         console.log(`Notifying user ${subscriber.user.email} about new product ${newProduct.name}`);
-
-        // Emit a real-time notification to the subscriber
-        io.to(subscriber.user.id).emit('newProductAlert', {
-          message: `A new product matching your preferences is available: ${newProduct.name}`,
-          product: newProduct,
-        });
       }
     } catch (error) {
       console.error('Error notifying subscribers:', error.message);
