@@ -31,7 +31,7 @@ const app = express();
 // Configure CORS
 const allowedOrigins = [
   'https://agric-vate.netlify.app/', // Replace with your Netlify URL
-  'http://localhost:1574', // For local development
+  'http://localhost:5174', // For local development
 ];
 
 app.use(cors({
